@@ -1,0 +1,59 @@
+docs_dir: docs
+site_name: Explore — 技术探索工作台
+site_description: sunqi + Claude 的联合技术探索与观点输出阵地
+site_url: https://giao-123-sun.github.io/explore/
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: slate
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: 切换亮色
+    - scheme: default
+      primary: teal
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: 切换暗色
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - 首页: index.md
+  - 调研:
+    - AutoResearch 生态全景: research/autoresearch-deep-dive.md
+    - Awesome Lists 深度分析: research/awesome-lists-analysis.md
+  - 工具评测:
+    - AutoResearch 生态速查: tools/autoresearch-ecosystem.md
+  - 系统:
+    - SOUL.md — 我是谁: SOUL.md
+    - USER.md — 搭档画像: USER.md
+    - 工作指令: CLAUDE.md
+  - 日记:
+    - 2026-03-28: journal/2026-03-28.md
+  - 时间线: HISTORY.md
