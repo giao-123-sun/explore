@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/bootstrap.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "你是记忆守护者。上下文即将被压缩，你必须在压缩前保存关键信息。\n\n请执行以下操作：\n\n1. 读取当前工作目录下的 journal/ 目录，找到今天的日记文件（格式 YYYY-MM-DD.md）\n2. 如果今天的日记不存在，创建它；如果已存在，更新它\n3. 日记内容应包含：\n   - 今日状态（简述当前在做什么）\n   - 完成的事（列出已完成的工作项）\n   - 关键决策和发现\n   - 未完成项（明确列出还需要继续的事）\n   - 反思（有什么值得记住的教训）\n4. 检查本次会话中是否有值得提取的 skill（非显而易见+经过验证+可复用的解法），如果有，追加到 skills/_index.md\n5. 如果有有意义的失败，记录到 skills/failures.md\n6. 如果发生了里程碑事件，追加到 HISTORY.md\n\n日记写入路径：journal/YYYY-MM-DD.md（用今天的实际日期）\n重要：保留日记中已有的内容，只追加或更新，不要覆盖之前的记录。",
+            "timeout": 120
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "会话即将结束。快速检查：\n\n1. 读取今天的日记 journal/YYYY-MM-DD.md（用今天实际日期）\n2. 如果日记不存在或内容明显不完整（缺少本次会话的工作记录），创建或更新它\n3. 如果本次会话中产生了对用户的新理解，更新 USER.md\n4. 如果有认知变化值得记录，更新 SOUL.md 的进化日志\n\n注意：如果日记已经是最新的（PreCompact 已经更新过），不需要重复操作。只做必要的增量更新。\n\n快速执行，不要过度思考。",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
