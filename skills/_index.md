@@ -52,6 +52,10 @@
 ### 自动化运营类
 （暂空 — 待实践积累）
 
+### 浏览器自动化类
+- `chrome-session-reuse` — 拷贝 Chrome profile 到临时目录 + Playwright persistent context 复用登录状态 [试验]
+- `playwright-proxy-fix` — Windows 系统代理冲突：用 `--no-proxy-server` 屏蔽系统代理，再用 `--proxy-server=` 显式指定 [试验]
+
 ### 开发调试类
 - `git-ssl-workaround` — Git SSL 证书路径问题用 `-c http.sslCAInfo` 解决 [稳定]
 - `gh-msys2-fullpath` — MSYS2 中 gh CLI 需要全路径调用 [稳定]

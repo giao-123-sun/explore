@@ -274,6 +274,7 @@ class ExploreTUI(App):
         Binding("3", "tab_awesome", "Awesome"),
         Binding("4", "tab_goalmd", "GOAL.md"),
         Binding("5", "tab_docs", "文档"),
+        Binding("r", "refresh_docs", "刷新"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -377,6 +378,20 @@ class ExploreTUI(App):
 
     def action_tab_docs(self) -> None:
         self.query_one("#tabs", TabbedContent).active = "tab-docs"
+
+    def action_refresh_docs(self) -> None:
+        """刷新文档列表 + 重新加载当前文档"""
+        doc_list = self.query_one("#doc-list", ListView)
+        doc_list.clear()
+        for item in self._build_doc_items():
+            doc_list.append(item)
+        # 也刷新 Awesome tab（从文件重新加载）
+        try:
+            awesome_tab = self.query_one("#tab-awesome VerticalScroll Markdown", Markdown)
+            awesome_tab.update(_load_md("awesome-lists-analysis.md"))
+        except Exception:
+            pass
+        self.notify(f"已刷新，发现 {len(self._build_doc_items())} 个文档")
 
 
 if __name__ == "__main__":
